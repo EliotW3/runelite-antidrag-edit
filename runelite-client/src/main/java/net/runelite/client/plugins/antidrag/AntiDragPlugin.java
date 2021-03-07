@@ -69,7 +69,6 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 	@Inject
 	private KeyManager keyManager;
 
-	private boolean inPvp;
 	private boolean shiftHeld;
 	private boolean ctrlHeld;
 
@@ -86,8 +85,8 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 		{
 			clientThread.invokeLater(() ->
 			{
-				inPvp = client.getVar(Varbits.PVP_SPEC_ORB) == 1;
-				if (!config.onShiftOnly() && !inPvp)
+				
+				if (!config.onShiftOnly())
 				{
 					setDragDelay();
 				}
@@ -113,12 +112,12 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		if (e.getKeyCode() == KeyEvent.VK_CONTROL && config.disableOnCtrl() && !(inPvp || config.onShiftOnly()))
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL && config.disableOnCtrl() && config.onShiftOnly())
 		{
 			resetDragDelay();
 			ctrlHeld = true;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_SHIFT && (inPvp || config.onShiftOnly()))
+		else if (e.getKeyCode() == KeyEvent.VK_SHIFT && config.onShiftOnly())
 		{
 			setDragDelay();
 			shiftHeld = true;
@@ -128,12 +127,12 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		if (e.getKeyCode() == KeyEvent.VK_CONTROL && config.disableOnCtrl() && !(inPvp || config.onShiftOnly()))
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL && config.disableOnCtrl() && config.onShiftOnly())
 		{
 			setDragDelay();
 			ctrlHeld = false;
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_SHIFT && (inPvp || config.onShiftOnly()))
+		else if (e.getKeyCode() == KeyEvent.VK_SHIFT && config.onShiftOnly())
 		{
 			resetDragDelay();
 			shiftHeld = false;
@@ -150,7 +149,7 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 				ctrlHeld = false;
 			}
 
-			if (config.onShiftOnly() || inPvp)
+			if (config.onShiftOnly())
 			{
 				shiftHeld = false;
 				clientThread.invoke(this::resetDragDelay);
@@ -167,11 +166,10 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 	{
 		boolean currentStatus = client.getVar(Varbits.PVP_SPEC_ORB) == 1;
 
-		if (currentStatus != inPvp)
-		{
-			inPvp = currentStatus;
+		
+			
 
-			if (!inPvp && !config.onShiftOnly())
+			if (!config.onShiftOnly())
 			{
 				setDragDelay();
 			}
@@ -179,7 +177,7 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 			{
 				resetDragDelay();
 			}
-		}
+		
 
 	}
 
@@ -192,7 +190,7 @@ public class AntiDragPlugin extends Plugin implements KeyListener
 			ctrlHeld = false;
 			clientThread.invoke(this::resetDragDelay);
 		}
-		else if (!inPvp && !config.onShiftOnly())
+		else if (!config.onShiftOnly())
 		{
 			clientThread.invoke(this::setDragDelay);
 		}
