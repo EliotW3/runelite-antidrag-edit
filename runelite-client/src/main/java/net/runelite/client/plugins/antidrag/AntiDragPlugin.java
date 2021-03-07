@@ -46,7 +46,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
 @PluginDescriptor(
-	name = "Anti Drag",
+	name = "GWD Helper",
 	description = "Prevent dragging an item for a specified delay",
 	tags = {"antidrag", "delay", "inventory", "items"},
 	enabledByDefault = false
