@@ -1,6 +1,6 @@
 ## AntiDrag Edit
 
-Simple edit for runelite that removes a check from the antidrag plugin. I don't play runescape but I guess this is a hack.
+Simple edit for runelite that removes a check from the antidrag plugin. I don't play runescape but I guess this is a hack. Works just the same as regular runelite but doesn't have the !inPvp check. Setup is probably easier if you just take the updated script from runelite-client/src/main/java/net/runelite/client/plugins/antidrag/AntiDragPlugin.java and just update the script through IntelliJ.
 
 
 ![](https://runelite.net/img/logo.png)
